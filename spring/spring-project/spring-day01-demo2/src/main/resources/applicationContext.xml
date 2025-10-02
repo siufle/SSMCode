@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--spring基于无参构造管理bean-->
+    <bean id="userDao" class="com.xq.dao.impl.UserDaoImpl"></bean>
+
+    <!--spring基于实例化工厂管理bean-->
+    <bean id="personFactory" class="com.xq.factory.PersonFactory"></bean>
+    <!--factory-bean 引用的是工厂bean的id   factory-method引用的是工厂bean中获取bean的方法-->
+    <bean id="personDao" class="com.xq.dao.impl.PersonDaoImpl"
+          factory-bean="personFactory" factory-method="getPersonDao"></bean>
+
+    <!--spring通过静态实例化工厂管理bean-->
+    <bean id="orderDaoFactory" class="com.xq.factory.OrderDaoFactory" factory-method="getOrderDao"></bean>
+</beans>
