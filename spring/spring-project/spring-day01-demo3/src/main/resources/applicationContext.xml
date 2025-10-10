@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--默认的使用set方法进行注入 前提是被管理的bean必须要有set方法-->
+    <bean id="car" class="com.xq.pojo.Car">
+        <property name="brand" value="BMW"></property>
+        <property name="type" value="530I"></property>
+    </bean>
+    <bean id="user" class="com.xq.pojo.User">
+        <!--对bean的属性值进行注入 name是bean的属性 value是该属性的值-->
+        <property name="name" value="zhangsan"></property>
+        <property name="age" value="18"></property>
+        <property name="address" value="CN"></property>
+        <!--ref用于引用数据类型的注入 通过另一个bean标签的id-->
+        <property name="car" ref="car"></property>
+    </bean>
+
+    <!--使用构造函数实现依赖注入-->
+    <bean id="department" class="com.xq.pojo.Department">
+        <constructor-arg name="id" value="1"></constructor-arg>
+        <constructor-arg name="name" value="技术部"></constructor-arg>
+        <constructor-arg name="location" value="北京"></constructor-arg>
+    </bean>
+    <bean id="emp" class="com.xq.pojo.Emp">
+        <constructor-arg name="id" value="1001"></constructor-arg>
+        <constructor-arg name="name" value="lisi"></constructor-arg>
+        <constructor-arg name="age" value="24"></constructor-arg>
+        <constructor-arg name="department" ref="department"></constructor-arg>
+    </bean>
+
+</beans>
