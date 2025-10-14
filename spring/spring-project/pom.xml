@@ -17,6 +17,8 @@
         <module>spring-day02-demo1</module>
         <module>spring-day02-account-annotation</module>
         <module>spring-day02-javaconfig</module>
+        <module>spring-day03-account</module>
+        <module>spring-day03-proxy</module>
     </modules>
 
     <properties>
