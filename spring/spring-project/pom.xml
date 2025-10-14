@@ -19,6 +19,9 @@
         <module>spring-day02-javaconfig</module>
         <module>spring-day03-account</module>
         <module>spring-day03-proxy</module>
+        <module>spring-day04-aspectj</module>
+        <module>spting-day04-aspectj-annotation</module>
+        <module>spring-day04-account-aop</module>
     </modules>
 
     <properties>
