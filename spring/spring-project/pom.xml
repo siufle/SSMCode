@@ -22,6 +22,10 @@
         <module>spring-day04-aspectj</module>
         <module>spting-day04-aspectj-annotation</module>
         <module>spring-day04-account-aop</module>
+        <module>spring-day05-jdbcTemplate</module>
+        <module>spring-day05-transaction-demo1</module>
+        <module>spring-day05-transaction-demo2</module>
+        <module>spring-day05-spring5-log</module>
     </modules>
 
     <properties>
