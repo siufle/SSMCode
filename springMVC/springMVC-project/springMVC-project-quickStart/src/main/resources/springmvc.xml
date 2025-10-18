@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/mvc
+       https://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!--开启包扫描-->
+    <context:component-scan base-package="com.xq"></context:component-scan>
+
+    <!--配置视图解析器-->
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/pages/"></property>
+        <property name="suffix" value=".jsp"></property>
+    </bean>
+
+    <!--配置数据类型转换器-->
+    <bean id="conversionServiceFactoryBean" class="org.springframework.context.support.ConversionServiceFactoryBean">
+        <property name="converters">
+            <array>
+                <bean id="dateFormatConverter" class="com.xq.converter.DateFormatConverter"></bean>
+            </array>
+        </property>
+    </bean>
+
+    <!--设置静态资源不过滤-->
+    <mvc:resources mapping="/css/**" location="/css/"></mvc:resources>
+    <mvc:resources mapping="/js/**" location="/js/"></mvc:resources>
+    <mvc:resources mapping="/images/**" location="/images/"></mvc:resources>
+
+    <!--path: 设置请求的url                 view-name: 设置跳转的视图名称-->
+    <mvc:view-controller path="/hello/demo1" view-name="success"></mvc:view-controller>
+
+    <!--开启处理器映射器 处理器适配器的自动配置-->  <!--enable-matrix-variables开启对矩阵变量的支持-->
+    <mvc:annotation-driven enable-matrix-variables="true" conversion-service="conversionServiceFactoryBean"></mvc:annotation-driven>
+
+</beans>
