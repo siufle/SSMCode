@@ -71,5 +71,13 @@
     <a href="${pageContext.request.contextPath}/demo1/testPathVariable/1001/kobe">测试PathVariable注解</a><br>
 
     <a href="${pageContext.request.contextPath}/demo1/testMatrixVariable/1;username=kobe;ages=11,12,13">测试矩阵变量</a><br>
+
+    <a href="${pageContext.request.contextPath}/demo1/testVoid">测试Void返回值</a><br>
+
+    <a href="${pageContext.request.contextPath}/demo1/testModelAndView">测试ModelAndView返回值</a><br>
+
+    <a href="${pageContext.request.contextPath}/demo1/testMap">使用map集合进行域对象传值</a><br>
+
+    <a href="${pageContext.request.contextPath}/demo1/testModel">使用Model进行域对象传值</a><br>
 </body>
 </html>

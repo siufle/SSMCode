@@ -9,7 +9,9 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -181,5 +183,52 @@ public class HelloController {
         System.out.println(username);
         System.out.println(ages);
         return "success";
+    }
+
+    @RequestMapping("testVoid")
+    public void testVoid(HttpServletResponse response, HttpServletRequest request) {
+        System.out.println("testVoid is running");
+        try {
+            //实现转发效果
+            //request.getRequestDispatcher("/pages/success.jsp").forward(request,response);
+            //实现重定向
+            response.sendRedirect("/pages/success.jsp");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @RequestMapping("testModelAndView")
+    public ModelAndView testModelAndView(){
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("username","kobe");
+        mv.setViewName("success");
+        return mv;
+    }
+
+    //使用map计划进行域对象传值
+    @RequestMapping("testMap")
+    public String testMap(Map<String,Object> map){
+        map.put("username","kobe");
+        return "success";
+    }
+
+    //使用Model对象进行域对象传值
+    @RequestMapping("testModel")
+    public String testModel(Model model){
+        model.addAttribute("username","kobe");
+        return "success";
+    }
+
+    //通过forward实现转发
+    @RequestMapping("testForward")
+    public String testForward(){
+        return "forward:/pages/success.jsp";
+    }
+
+    //通过redirect实现重定向
+    @RequestMapping("testRedirect")
+    public String testRedirect(){
+        return "redirect:/pages/success.jsp";
     }
 }
