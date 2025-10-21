@@ -10,6 +10,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>springMVC-project-quickStart</module>
+        <module>springMVC-project-restful</module>
     </modules>
 
     <properties>
