@@ -8,6 +8,15 @@ public class Account {
 
     private Double money;
 
+    public Account() {
+    }
+
+    public Account(Integer id, String name, Double money) {
+        this.id = id;
+        this.name = name;
+        this.money = money;
+    }
+
     public Integer getId() {
         return id;
     }
