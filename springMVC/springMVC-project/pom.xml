@@ -13,6 +13,7 @@
         <module>springMVC-project-restful</module>
         <module>springMVC-project-file</module>
         <module>springMVC-project-exception</module>
+        <module>springMVC-project-interceptor</module>
     </modules>
 
     <properties>
