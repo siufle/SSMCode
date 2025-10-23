@@ -12,6 +12,7 @@
         <module>springMVC-project-quickStart</module>
         <module>springMVC-project-restful</module>
         <module>springMVC-project-file</module>
+        <module>springMVC-project-exception</module>
     </modules>
 
     <properties>
