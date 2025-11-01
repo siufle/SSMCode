@@ -1,0 +1,8 @@
+
+<!--namespace:命名空间 值唯一 一般用接口的全限定名-->
+<mapper namespace="com.xq.dao.UserDao">
+    <!--select标签执行查询操作 id的值是要调用的接口的方法 resultType:返回值类型-->
+    <select id="findAll" resultType="com.xq.pojo.User">
+        SELECT * FROM user
+    </select>
+</mapper>
