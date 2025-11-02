@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xq.dao.UserDao">
+
+    <!--将自定义的数据类型中的成员变量与数据表中的列一一对应形成映射
+    可以解决自定义数据类型成员变量名称与数据表中列的名称不一致的问题
+    id标签映射主键  result标签映射其他列
+    property为自定义数据类型成员变量的名称 column为数据表的列-->
+    <resultMap id="resultMap" type="com.xq.pojo.User">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="birthday" column="birthday"/>
+        <result property="sex" column="sex"/>
+        <result property="address" column="address"/>
+    </resultMap>
+    
+    <select id="findAll" resultType="user">
+        SELECT * FROM user
+    </select>
+
+    <select id="findUserById" resultType="user" parameterType="int">
+        SELECT * FROM user WHERE id = #{id}
+    </select>
+
+    <insert id="addUser" parameterType="user" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        /*获取新增之后主键的值*/
+        <!--<selectKey keyColumn="id" keyProperty="id" resultType="int">
+            SELECT last_insert_id()
+        </selectKey>-->
+        INSERT INTO user (username, birthday, sex, address) VALUES (#{username}, #{birthday}, #{sex}, #{address})
+    </insert>
+
+    <update id="updateUser" parameterType="user">
+        UPDATE user SET username=#{username}, birthday=#{birthday}, sex=#{sex}, address=#{address} WHERE id=#{id}
+    </update>
+
+    <delete id="deleteUser" parameterType="int">
+        DELETE FROM user WHERE id=#{id}
+    </delete>
+
+    <select id="findUserByName" parameterType="String" resultType="user">
+        SELECT * FROM user WHERE username LIKE #{username}
+    </select>
+
+    <select id="getTotal" resultType="int">
+        SELECT COUNT(*) FROM user
+    </select>
+
+    <!--传递多个参数-->
+    <select id="findUSerBySexAndAddress" resultType="user">
+        SELECT * FROM user WHERE sex = '${param1}' AND address = '${param2}'
+    </select>
+
+    <!--通过map集合解决传多个参数的问题 #{}内填写map的key-->
+    <select id="findUSerByMap" parameterType="map" resultType="user">
+        SELECT * FROM user WHERE sex = #{sex} AND address = #{address}
+    </select>
+
+    <!--通过集合中的多个id值获取多个User对象
+        collection 遍历的集合名称  item 集合内每一个元素的别名  separator 以什么分割集合内的每一个元素
+        open close 这些集合内元素组合形式的开头和结尾-->
+    <select id="findUserByIds" parameterType="com.xq.pojo.QueryVo" resultType="user">
+        SELECT * FROM user WHERE id IN
+            <foreach collection="ids" item="id" open="(" close=")" separator=",">
+                #{id}
+            </foreach>
+    </select>
+</mapper>
