@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config
+3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <!--加载db.properties配置文件-->
+    <properties resource="db.properties"/>
+    <!--开启批处理 开启后执行批处理需要手动提交-->
+    <settings>
+        <setting name="defaultExecutorType" value="BATCH"/>
+    </settings>
+    <!--定义别名-->
+    <typeAliases>
+        <!--<typeAlias type="com.xq.pojo.User" alias="user"/>-->
+        <!--将该包下的所有类取别名且别名默认为该类名的小写-->
+        <package name="com.xq.pojo"/>
+    </typeAliases>
+    <environments default="mybatis">
+        <environment id="mybatis">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <!--<mapper resource="com/xq/dao/UserDao.xml"/>-->
+        <!--批量导入映射文件-->
+        <package name="com.xq.dao"/>
+    </mappers>
+</configuration>

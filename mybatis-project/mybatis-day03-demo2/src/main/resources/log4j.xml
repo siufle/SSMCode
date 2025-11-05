@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" strict="true" name="XMLConfig">
+    <Properties>
+        <Property name="log.pattern">%d{ISO8601} %-6r [%15.15t] %-5p %30.30c %x - %m%n</Property>
+        <Property name="log.file.path">d:/axis.log</Property>
+    </Properties>
+
+    <Appenders>
+        <!-- Console Appender -->
+        <Console name="CONSOLE" target="SYSTEM_OUT">
+            <PatternLayout pattern="${log.pattern}"/>
+        </Console>
+
+        <!-- File Appender -->
+        <File name="LOGFILE" fileName="${log.file.path}" append="true">
+            <PatternLayout pattern="${log.pattern}"/>
+        </File>
+    </Appenders>
+
+    <Loggers>
+        <!-- Apache Axis enterprise logger with FATAL level -->
+        <Logger name="org.apache.axis.enterprise" level="FATAL" additivity="false">
+            <AppenderRef ref="CONSOLE"/>
+        </Logger>
+
+        <!-- Root logger -->
+        <Root level="DEBUG">
+            <AppenderRef ref="CONSOLE"/>
+            <AppenderRef ref="LOGFILE"/>
+        </Root>
+    </Loggers>
+</Configuration>

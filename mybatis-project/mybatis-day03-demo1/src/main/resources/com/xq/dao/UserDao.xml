@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xq.dao.UserDao">
+    <!--动态查询--><!--先拼接一个恒成立的等式确保语法的正确-->
+    <select id="findByCondition" parameterType="user" resultType="user">
+        select * from user where 1 = 1
+        <if test="username != null and username != ''">
+            and username = #{username}
+        </if>
+        <if test="birthday != null and birthday != ''">
+            and birthday = #{birthday}
+        </if>
+        <if test="sex != null and sex != ''">
+            and sex = #{sex}
+        </if>
+        <if test="address != null and address != ''">
+            and address = #{address}
+        </if>
+    </select>
+
+    <!--用where标签替换where 1 = 1 并且该标签会自动去除第一个条件前的and-->
+    <select id="findByCondition2" parameterType="user" resultType="user">
+        select * from user
+        <where>
+            <if test="username != null and username != ''">
+                and username = #{username}
+            </if>
+            <if test="birthday != null and birthday != ''">
+                and birthday = #{birthday}
+            </if>
+            <if test="sex != null and sex != ''">
+                and sex = #{sex}
+            </if>
+            <if test="address != null and address != ''">
+                and address = #{address}
+            </if>
+        </where>
+    </select>
+
+    <!--动态修改-->
+    <update id="updateUserByCondition" parameterType="user">
+        update user
+        <set>
+            <if test="username != null and username != '' ">
+                username = #{username},
+            </if>
+            <if test="birthday != null and birthday != '' ">
+                birthday = #{birthday},
+            </if>
+            <if test="sex != null and sex != '' ">
+                sex = #{sex},
+            </if>
+            <if test="address != null and address != '' ">
+                address = #{address},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--sql语句片段-->
+    <sql id="key">
+        /*去除拼接好的sql语句片段最后多余的逗号*/
+        <trim suffixOverrides=",">
+            <if test="username != null and username != '' ">
+                username,
+            </if>
+            <if test="birthday != null and birthday != '' ">
+                birthday,
+            </if>
+            <if test="sex != null and sex != '' ">
+                sex,
+            </if>
+            <if test="address != null and address != '' ">
+                address,
+            </if>
+        </trim>
+    </sql>
+
+    <sql id="value">
+        /*去除拼接好的sql语句片段最后多余的逗号*/
+        <trim suffixOverrides=",">
+            <if test="username != null and username != '' ">
+                #{username},
+            </if>
+            <if test="birthday != null and birthday != '' ">
+                #{birthday},
+            </if>
+            <if test="sex != null and sex != '' ">
+                #{sex},
+            </if>
+            <if test="address != null and address != '' ">
+                #{address},
+            </if>
+        </trim>
+    </sql>
+
+    <!--动态插入--><!--include标签引用之前定义的sql片段-->
+    <insert id="addUserSelective" parameterType="user">
+        insert into user(<include refid="key"/>) values(<include refid="value"/>)
+    </insert>
+
+
+    <!--通过一个条件查询 通过choose-when-otherwise标签 相当于 if-elseif-else -->
+    <select id="findByCondition3" parameterType="user" resultType="user">
+        select * from user
+        <where>
+            <choose>
+                <when test="username != null and username != ''">
+                    username = #{username}
+                </when>
+                <when test="birthday != null and birthday != ''">
+                    birthday = #{birthday}
+                </when>
+                <when test="sex != null and sex != ''">
+                    sex = #{sex}
+                </when>
+                <when test="address != null and address != ''">
+                    address = #{address}
+                </when>
+                <otherwise>
+                    id = #{id}
+                </otherwise>
+            </choose>
+        </where>
+    </select>
+
+    <!--批量删除-->
+    <delete id="deleteUserByIds">
+        delete from user where id in
+               (
+                    <foreach collection="array" item="id" separator=",">
+                        #{id}
+                    </foreach>
+               )
+    </delete>
+
+    <!--新增用户-->
+    <insert id="addUser" parameterType="user">
+        insert into user(username, birthday, sex, address) values(#{username}, #{birthday}, #{sex}, #{address})
+    </insert>
+</mapper>

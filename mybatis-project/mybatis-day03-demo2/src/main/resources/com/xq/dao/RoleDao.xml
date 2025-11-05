@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xq.dao.RoleDao">
+
+    <resultMap id="roleMap" type="com.xq.pojo.Role">
+        <id column="id" property="roleId"/>
+        <result column="ROLE_NAME" property="roleName"/>
+        <result column="ROLE_DESC" property="roleDesc"/>
+        <collection property="users" ofType="com.xq.pojo.User">
+            <result column="username" property="username"/>
+            <result column="address" property="address"/>
+        </collection>
+    </resultMap>
+
+    <select id="findRole" resultMap="roleMap">
+        SELECT r.*, u.username, u.address
+        FROM role AS r, `user` AS u, user_role AS ur
+        WHERE r.ID = ur.RID AND u.id = ur.UID
+    </select>
+</mapper>

@@ -1,0 +1,69 @@
+package com.xq;
+
+import com.xq.dao.AccountDao;
+import com.xq.dao.RoleDao;
+import com.xq.dao.UserDao;
+import com.xq.pojo.Account;
+import com.xq.pojo.AccountUser;
+import com.xq.pojo.Role;
+import com.xq.pojo.User;
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
+
+public class TestMybatis {
+
+    SqlSession sqlSession;
+
+    AccountDao accountDao;
+
+    UserDao userDao;
+
+    RoleDao roleDao;
+
+    InputStream is;
+
+    @Before
+    public void init() throws IOException {
+        is = Resources.getResourceAsStream("sqlMapConfig.xml");
+        SqlSessionFactoryBuilder builder = new SqlSessionFactoryBuilder();
+        SqlSessionFactory factory = builder.build(is);
+        sqlSession = factory.openSession(true);//开启自动提交
+        //sqlSession = factory.openSession(ExecutorType.BATCH,false);//开启批处理并关闭自动提交
+        //accountDao = sqlSession.getMapper(AccountDao.class);
+        //userDao = sqlSession.getMapper(UserDao.class);
+        roleDao = sqlSession.getMapper(RoleDao.class);
+    }
+
+    @After
+    public void after() throws IOException {
+        sqlSession.close();
+        is.close();
+    }
+
+    /*@Test
+    public void Test1() throws IOException {
+        List<Account> accountList = accountDao.findAccount();
+        accountList.forEach(System.out::println);
+    }
+
+    @Test
+    public void Test2() throws IOException {
+        List<User> userList = userDao.findUser();
+        userList.forEach(System.out::println);
+    }*/
+
+    @Test
+    public void Test3() throws IOException {
+        List<Role> roleList = roleDao.findRole();
+        roleList.forEach(System.out::println);
+    }
+}

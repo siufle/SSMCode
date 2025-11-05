@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xq.dao.UserDao">
+
+    <resultMap id="userMap" type="com.xq.pojo.User">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="birthday" column="birthday"/>
+        <result property="sex" column="sex"/>
+        <result property="address" column="address"/>
+        <!--collection用于一对多关联-->
+        <!--<collection property="accounts" ofType="com.xq.pojo.Account">
+            &lt;!&ndash;<id property="id" column="id"/>&ndash;&gt;
+            <result property="uid" column="uid"/>
+            <result property="money" column="money"/>
+        </collection>-->
+    </resultMap>
+
+    <select id="findUser" resultMap="userMap">
+        SELECT `user`.*, account.UID, account.MONEY
+        FROM `user`, account
+        WHERE `user`.id = account.UID
+    </select>
+</mapper>
