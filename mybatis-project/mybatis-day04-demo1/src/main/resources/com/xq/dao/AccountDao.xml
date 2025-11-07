@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xq.dao.AccountDao">
+
+    <!--<resultMap id="accountMap" type="com.xq.pojo.Account">
+        <id property="id" column="ID"/>
+        <result property="uid" column="UId"/>
+        <result property="money" column="MONEY"/>
+        &lt;!&ndash;column要传递到select里的方法的参数&ndash;&gt;
+        <association property="user" column="uid" select="com.xq.dao.UserDao.findUserById"/>
+    </resultMap>
+
+    <select id="findAccount" resultMap="accountMap">
+        SELECT * FROM account
+    </select>-->
+
+    <select id="getAccountByUId" parameterType="int" resultType="account">
+        SELECT * FROM account WHERE uid = #{id}
+    </select>
+
+</mapper>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xq.dao.UserDao">
+    <!--开启二级缓存的支持-->
+    <cache/>
+
+    <!--<select id="findUserById" resultType="user" parameterType="int">
+        SELECT * FROM user WHERE id = #{id}
+    </select>-->
+
+    <resultMap id="userMap" type="com.xq.pojo.User">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="birthday" column="birthday"/>
+        <result property="sex" column="sex"/>
+        <result property="address" column="address"/>
+        <collection property="accounts" column="id" select="com.xq.dao.AccountDao.getAccountByUId"/>
+    </resultMap>
+
+    <!--useCache开启二级缓存-->
+    <select id="findUser" resultMap="userMap" useCache="true">
+        SELECT * FROM user
+    </select>
+
+</mapper>
